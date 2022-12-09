@@ -175,8 +175,12 @@ function set_swap_size(){
 }
 
 function check_data_avail(){
-	total=`df |grep -E " /data$" |awk '{print $2}'`
-	avail=`df |grep -E " /data$" |awk '{print $4}'`
+	# Original oplus available space grepping method. Fails on rooted
+	# device due to magisk modifying the mountpoint of /data.
+	#total=`df |grep -E " /data$" |awk '{print $2}'`
+	#avail=`df |grep -E " /data$" |awk '{print $4}'`
+	total=`df /data | awk '{print$2}' | tail -n1`
+	avail=`df /data | awk '{print$4}' | tail -n1`
 	#64G > 4.5+x G, 128G > 7+x G, 256G > 7+x G
 	if [ $total -gt 146800640 ]; then
 		threshold=7340032
