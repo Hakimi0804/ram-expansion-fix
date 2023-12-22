@@ -36,13 +36,7 @@ function configure_hybridswap_parameters() {
 }
 
 function configure_zram_parameters() {
-	if [ "$target" == "kona" ] || [ "$target" == "lahaina" ] && [[ $MemTotal -gt 6291456 ]]; then
-		echo zstd > /sys/block/zram0/comp_algorithm
-	elif [ "$target" == "msmnile" ] || [ "$target" == "holi" ]; then
-		echo zstd > /sys/block/zram0/comp_algorithm
-	else
-		echo lz4 > /sys/block/zram0/comp_algorithm
-	fi
+	echo lz4 > /sys/block/zram0/comp_algorithm
 
 	if [ -f /sys/block/zram0/disksize ]; then
 		if [ -f /sys/block/zram0/use_dedup ]; then
